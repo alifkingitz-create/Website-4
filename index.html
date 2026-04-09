@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<title>Love ❤️</title>
+
+<style>
+
+/* ---------- GLOBAL ---------- */
+body{
+  margin:0;
+  background:black;
+  overflow:hidden;
+  font-family:sans-serif;
+}
+.page{
+  display:none;
+  width:100%;
+  height:100vh;
+  justify-content:center;
+  align-items:center;
+  position:absolute;
+  top:0;
+  left:0;
+}
+.active{display:flex;}
+
+/* ---------- SWIPE ---------- */
+.swipe{
+  position: relative;
+  background-color: #F1F7F7;
+  width: 200px;
+  height: 60px;
+  border-radius: 60px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+}
+.container{
+  position:absolute;
+  left:5px;
+  width:50px;
+  height:50px;
+  background:#7AB5B7;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  transition:0.3s;
+}
+.swipe:hover .container{
+  left:calc(100% - 55px);
+}
+
+/* ---------- LOGIN ---------- */
+#Container{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.form{
+  padding:20px;
+  border-radius:10px;
+  border:3px solid white;
+  background:rgba(0,255,240,0.5);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  animation: float 2s infinite;
+}
+@keyframes float{
+  50%{transform:translateY(20px);}
+}
+
+/* ---------- PHONE ---------- */
+.phoneContainer{
+  width:185px;
+  height:350px;
+  background:black;
+  border-radius:20px;
+  position:relative;
+}
+.screen{
+  width:180px;
+  height:340px;
+  border-radius:20px;
+  position:absolute;
+  top:4px;
+  left:2px;
+  overflow:hidden;
+}
+.camera{
+  width:80px;
+  height:20px;
+  background:black;
+  position:absolute;
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:25px;
+  animation:callTransition 1.9s infinite alternate;
+}
+@keyframes callTransition{
+  15%{width:40px;}
+  95%{width:95px;background:darkblue;}
+}
+
+/* scanner */
+.scannerBox{
+  width:100%;
+  height:100%;
+  position:relative;
+}
+#cameraFeed{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.scanLine{
+  width:100%;
+  height:3px;
+  background:#00ffcc;
+  position:absolute;
+  animation:scan 2s infinite;
+}
+@keyframes scan{
+  0%{top:0;}
+  100%{top:100%;}
+}
+
+/* ---------- LOADER ---------- */
+.loader .text span{
+  animation: loading 1s infinite;
+}
+@keyframes loading{
+  0%{opacity:0;}
+  50%{opacity:1;}
+  100%{opacity:0;}
+}
+
+/* ---------- ENVELOPE FULL ---------- */
+.letter-image{
+  position:relative;
+  width:200px;
+  height:200px;
+  cursor:pointer;
+}
+
+.animated-mail{
+  position:absolute;
+  height:150px;
+  width:200px;
+  transition:0.4s;
+}
+
+.body{
+  position:absolute;
+  bottom:0;
+  border-style:solid;
+  border-width:0 0 100px 200px;
+  border-color:transparent transparent #e95f55 transparent;
+}
+
+.top-fold{
+  position:absolute;
+  top:50px;
+  border-style:solid;
+  border-width:50px 100px 0 100px;
+  border-color:#cf4a43 transparent transparent transparent;
+  transform-origin:50% 0%;
+  transition:0.4s;
+}
+
+.back-fold{
+  position:absolute;
+  bottom:0;
+  width:200px;
+  height:100px;
+  background:#cf4a43;
+}
+
+.left-fold{
+  position:absolute;
+  bottom:0;
+  border-style:solid;
+  border-width:50px 0 50px 100px;
+  border-color:transparent transparent transparent #e15349;
+}
+
+.letter{
+  position:absolute;
+  left:20px;
+  bottom:0;
+  width:160px;
+  height:60px;
+  background:white;
+  overflow:hidden;
+  transition:0.4s;
+}
+
+.letter img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.shadow{
+  position:absolute;
+  top:160px;
+  width:200px;
+  height:20px;
+  background:rgba(0,0,0,0.5);
+  border-radius:50%;
+}
+
+/* hover animation */
+.letter-image:hover .top-fold{
+  transform:rotateX(180deg);
+}
+.letter-image:hover .letter{
+  height:180px;
+}
+
+/* mobile */
+@media(max-width:600px){
+  .phoneContainer{transform:scale(0.9);}
+}
+
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" src="song.mp3" loop></audio>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
+  <div class="swipe" onclick="startMusic(); go(2)">
+    Get Started
+    <span class="container">➡</span>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+  <div id="Container">
+    <form class="form" onsubmit="login(event)">
+      <input placeholder="UserName">
+      <input id="pass" type="password" placeholder="Password">
+      <button>Continue</button>
+      <p id="err" style="color:red;display:none;">Wrong Password</p>
+    </form>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="page">
+  <div class="phoneContainer">
+    <div class="screen">
+      <div class="camera"></div>
+      <div class="scannerBox">
+        <video id="cameraFeed" autoplay playsinline></video>
+        <div class="scanLine"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div id="page4" class="page">
+  <div class="loader">
+    <div class="text"><span>Loading</span></div>
+    <div class="text"><span>Loading</span></div>
+    <div class="text"><span>Loading</span></div>
+  </div>
+</div>
+
+<!-- PAGE 5 (NEW ENVELOPE) -->
+<div id="page5" class="page" style="flex-direction:column;gap:20px;">
+
+<div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
+
+<div class="letter-image" onclick="openPhoto(this)">
+  <div class="animated-mail">
+    <div class="back-fold"></div>
+    <div class="letter"><img src="img1.jpg"></div>
+    <div class="top-fold"></div>
+    <div class="body"></div>
+    <div class="left-fold"></div>
+  </div>
+  <div class="shadow"></div>
+</div>
+
+<div class="letter-image" onclick="openPhoto(this)">
+  <div class="animated-mail">
+    <div class="back-fold"></div>
+    <div class="letter"><img src="img2.jpg"></div>
+    <div class="top-fold"></div>
+    <div class="body"></div>
+    <div class="left-fold"></div>
+  </div>
+  <div class="shadow"></div>
+</div>
+
+<div class="letter-image" onclick="openPhoto(this)">
+  <div class="animated-mail">
+    <div class="back-fold"></div>
+    <div class="letter"><img src="img3.jpg"></div>
+    <div class="top-fold"></div>
+    <div class="body"></div>
+    <div class="left-fold"></div>
+  </div>
+  <div class="shadow"></div>
+</div>
+
+</div>
+
+<button onclick="go(6)" style="padding:10px 20px;background:#ff4d88;border:none;border-radius:20px;color:white;">
+Next ❤️
+</button>
+
+</div>
+
+<!-- PHOTO VIEW -->
+<div id="photoView" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:black;justify-content:center;align-items:center;flex-direction:column;">
+<img id="bigPhoto" style="max-width:90%;border-radius:10px;">
+<button onclick="closePhoto()" style="margin-top:20px;padding:10px 20px;">Close</button>
+</div>
+
+<!-- PAGE 6 -->
+<div id="page6" class="page flex justify-center items-center">
+  <div class="text-white text-center">
+    <h1 class="text-2xl text-pink-500">I Love You ❤️</h1>
+    <p>You are my everything 💖</p>
+  </div>
+</div>
+
+<script>
+
+function startMusic(){
+  document.getElementById("bgMusic").play().catch(()=>{});
+}
+
+function go(p){
+  document.querySelector(".active").classList.remove("active");
+  document.getElementById("page"+p).classList.add("active");
+
+  if(p===3) startScan();
+  if(p===4) setTimeout(()=>go(5),4000);
+}
+
+function login(e){
+  e.preventDefault();
+  if(document.getElementById("pass").value==="Sannu"){
+    go(3);
+  }else{
+    document.getElementById("err").style.display="block";
+  }
+}
+
+function startScan(){
+  navigator.mediaDevices.getUserMedia({video:true})
+  .then(stream=>{
+    cameraFeed.srcObject=stream;
+    setTimeout(()=>go(4),3000);
+  });
+}
+
+/* PHOTO */
+function openPhoto(el){
+  let img = el.querySelector("img").src;
+  document.getElementById("bigPhoto").src = img;
+  document.getElementById("photoView").style.display="flex";
+}
+function closePhoto(){
+  document.getElementById("photoView").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
