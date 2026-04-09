@@ -1,0 +1,183 @@
+/<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love ❤️</title>
+
+<style>
+body{
+margin:0;
+background:black;
+color:white;
+font-family:sans-serif;
+overflow:hidden;
+}
+.page{
+display:none;
+height:100vh;
+width:100%;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+position:absolute;
+}
+.active{display:flex;}
+
+/* BUTTON */
+.btn{
+padding:12px 25px;
+background:#ff4d88;
+border:none;
+border-radius:20px;
+color:white;
+cursor:pointer;
+}
+
+/* ENVELOPE */
+.envWrap{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.env{
+width:120px;
+height:80px;
+background:#e95f55;
+position:relative;
+cursor:pointer;
+border-radius:5px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.env img{
+width:90%;
+height:90%;
+object-fit:cover;
+border-radius:5px;
+}
+
+/* POPUP */
+#popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:999;
+}
+
+#popup img{
+width:80%;
+max-width:300px;
+border-radius:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div id="p1" class="page active">
+<button class="btn" onclick="go(2)">Start</button>
+</div>
+
+<!-- PAGE 2 -->
+<div id="p2" class="page">
+<input id="pass" placeholder="Password">
+<button class="btn" onclick="login()">Continue</button>
+</div>
+
+<!-- PAGE 3 -->
+<div id="p3" class="page">
+<h2>Scanning...</h2>
+</div>
+
+<!-- PAGE 4 -->
+<div id="p4" class="page">
+<h2>Loading...</h2>
+</div>
+
+<!-- PAGE 5 (ENVELOPE) -->
+<div id="p5" class="page">
+<div class="envWrap">
+
+<div class="env" onclick="openImg('img1.jpg')">
+<img src="img1.jpg">
+</div>
+
+<div class="env" onclick="openImg('img2.jpg')">
+<img src="img2.jpg">
+</div>
+
+<div class="env" onclick="openImg('img3.jpg')">
+<img src="img3.jpg">
+</div>
+
+</div>
+
+<br>
+<button class="btn" onclick="go(6)">Next</button>
+</div>
+
+<!-- POPUP -->
+<div id="popup">
+<img id="popImg">
+<br>
+<button class="btn" onclick="closeImg()">Close</button>
+</div>
+
+<!-- PAGE 6 -->
+<div id="p6" class="page">
+<h1>❤️ I Love You ❤️</h1>
+</div>
+
+<script>
+
+/* PAGE */
+function go(n){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById("p"+n).classList.add("active");
+
+if(n==3){
+setTimeout(()=>go(4),3000);
+}
+if(n==4){
+setTimeout(()=>go(5),3000);
+}
+}
+
+/* LOGIN */
+function login(){
+if(document.getElementById("pass").value==="Sannu"){
+go(3);
+}else{
+alert("Wrong Password");
+}
+}
+
+/* IMAGE OPEN */
+function openImg(src){
+document.getElementById("popup").style.display="flex";
+document.getElementById("popImg").src=src;
+}
+
+/* CLOSE */
+function closeImg(){
+document.getElementById("popup").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
